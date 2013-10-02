@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<script src="jquery.js"></script>
+		<title>Compilador</title>
+	</head>
+	<body>	
+		<form action="" method="POST">
+			<label><b>Digite seu codigo</b></label><br/>	
+			<textarea id="programa" name="programa" rows="20" cols="50"></textarea>
+			
+			<br/>			
+			<input type="button" id="validarlexico" name="validarlexico"  value="Validador Lexico" onclick="validaOperacao('lexico')"/>	
+			<input type="button" id="validarsintatico" name="validarsintatico"  value="Validador Sintatico" onclick="validaOperacao('sintatico')"/>
+			<input type="button" value="limpar" onclick="limpar()" />
+		</form>
+	</body>
+</html>
+<script>
+	function validaOperacao(operacao) {
+			var programa = $("#programa").val();
+			var i;
+			var msg = "";
+			
+			if(programa == ""){
+				alert('Opa. O campo nao pode ficar vazio.');
+				return false;
+			}
+			
+			$.ajax({ 
+				type: "POST", 
+				url: "controlador.php", 
+				data: "programa="+programa+"&operacao="+operacao, 
+				success: function(msg){
+					retorno = msg.split("|"); 			
+					alert(retorno);
+				} 
+			});
+	};
+	function limpar(){
+		$("#programa").val('');
+	}
+	
+</script>
